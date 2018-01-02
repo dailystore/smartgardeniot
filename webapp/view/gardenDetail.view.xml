@@ -1,0 +1,54 @@
+<mvc:View controllerName="sap.smartGarden.controller.gardenDetail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:layout="sap.ui.layout">
+	<Page title="{i18n>gardenOverview}" class="sapUiResponsiveContentPadding">
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Button tooltip="Home" press="handleHomePress" icon="sap-icon://home" type="Transparent"/>
+				</contentLeft>
+				<contentMiddle >
+					<Title text="{i18>gerdenDetail}"></Title>
+				</contentMiddle >
+			</Bar>
+		</customHeader>
+		<content>
+			<layout:VerticalLayout width="100%">
+				<Bar type="Transparent">
+					<contentRight>
+						<Button text="watering"></Button>
+						<Button text="execute"></Button>
+						<Button text="refresh"></Button>
+					</contentRight>
+				</Bar>
+			</layout:VerticalLayout>
+			<layout:VerticalLayout width="100%">
+				<!--<Button id="displayNotFoundBtn" text="{i18n>DisplayNotFound}" press="onDisplayNotFound" class="sapUiTinyMarginEnd"/>-->
+				<layout:HorizontalLayout width="100%" class="saperateContentHomePage">
+					<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{gardenDetail>/block1/header}"
+						subheader="{gardenDetail>/block1/subHeader}" press="press" id="idoInstand1" ariaLabel="Instand1">
+						<TileContent footer="{gardenDetail>/block1/cover}">
+							<ImageContent src="./image/tree.jpg" description="Icon" press="press"></ImageContent>
+						</TileContent>
+					</GenericTile>
+					<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{gardenDetail>/block2/header}"
+						subheader="{gardenDetail>/block2/subHeader}" press="press" id="idoInstand2" ariaLabel="Instand2">
+						<TileContent footer="{gardenDetail>/block2/cover}">
+							<ImageContent src="./image/tree.jpg" description="Icon" press="press"></ImageContent>
+						</TileContent>
+					</GenericTile>
+					<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{gardenDetail>/block3/header}"
+						subheader="{gardenDetail>/block1/subHeader}" press="press" id="idoInstand3" ariaLabel="Instand3">
+						<TileContent footer="{gardenDetail>/block3/cover}">
+							<ImageContent src="./image/tree.jpg" description="Icon" press="press"></ImageContent>
+						</TileContent>
+					</GenericTile>
+					<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{gardenDetail>/block4/header}"
+						subheader="{gardenDetail>/block2/subHeader}" press="press" id="idoInstand4" ariaLabel="Instand4">
+						<TileContent footer="{gardenDetail>/block4/cover}">
+							<ImageContent src="./image/tree.jpg" description="Icon" press="press"></ImageContent>
+						</TileContent>
+					</GenericTile>
+				</layout:HorizontalLayout>
+			</layout:VerticalLayout>
+		</content>
+	</Page>
+</mvc:View>
