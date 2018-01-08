@@ -84,21 +84,22 @@ func sendRequest() {
 	fmt.Println(results[0].C_MESSAGES)
 
 	//
-	uri = "http://node1.local/triggerWater?val=1"
-	req, err = http.NewRequest("GET", uri, nil)
+	if len(results) == 10 {
+		uri = "http://node1.local/triggerWater?val=1"
+		req, err = http.NewRequest("GET", uri, nil)
 
-	// client := &http.Client{}
-	resp, err = client.Do(req)
-	if err != nil {
-		// handle error
+		// client := &http.Client{}
+		resp, err = client.Do(req)
+		if err != nil {
+			// handle error
+		}
+
+		defer resp.Body.Close()
+		body, err = ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println("Body read error!", err)
+			return
+		}
+		fmt.Println(string(body))
 	}
-
-	defer resp.Body.Close()
-	body, err = ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("Body read error!", err)
-		return
-	}
-	fmt.Println(string(body))
-
 }
