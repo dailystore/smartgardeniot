@@ -85,22 +85,22 @@ func sendRequest() {
 
 	//
 	//if len(results) == 10 {
-		uri1 := "http://node1.local/triggerWater?val=1"
-		req1, err := http.NewRequest("GET", uri, nil)
+	uri1 := "http://node1.local/triggerWater?val=10000000"
+	req1, err := http.NewRequest("GET", uri1, nil)
 
-		client1 := &http.Client{}
-		resp1, err := client1.Do(req1)
-		if err != nil {
-			// handle error
-		}
-		fmt.Println(uri1)
+	client1 := &http.Client{}
+	resp1, err := client1.Do(req1)
+	if err != nil {
+		// handle error
+	}
+	fmt.Println(uri1)
 
-		defer resp1.Body.Close()
-		body1, err := ioutil.ReadAll(resp1.Body)
-		if err != nil {
-			fmt.Println("Body read error!", err)
-			return
-		}
-		fmt.Println(string(body1))
+	defer resp1.Body.Close()
+	body1, err := ioutil.ReadAll(resp1.Body)
+	if err != nil {
+		fmt.Println("Body read error!", err)
+		return
+	}
+	fmt.Println(string(body1))
 	//}
 }
