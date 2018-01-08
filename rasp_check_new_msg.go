@@ -34,6 +34,8 @@ type Mssg struct {
 	} `json:"d"`
 }
 
+var msgCount = 0
+
 func handleRoot(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Server started!")
 
@@ -79,13 +81,19 @@ func sendRequest() {
 	}
 
 	results := mssg.D.Results
+	fmt.Println(results[len(results)-1].C_MESSAGES)
 
 	fmt.Println(len(results))
-	fmt.Println(results[0].C_MESSAGES)
-
-	//
-	if len(results) == 12 {
-		uri1 := "http://node1.local/triggerWater?val=10000000"
+	if msgCount == 0 {
+		msgCount = len(results)
+		fmt.Println("msgCount: ", msgCount)
+	}
+	fmt.Println("current msgCount: ", msgCount)
+	fmt.Println("current len(results) : ", len(results))
+	if msgCount != 0 && len(results) != msgCount {
+		msgCount = len(results)
+		fmt.Println("msgCount new: ", msgCount)
+		uri1 := "http://node1.local/triggerWater?val=1"
 		req1, err := http.NewRequest("GET", uri1, nil)
 
 		client1 := &http.Client{}
@@ -103,4 +111,9 @@ func sendRequest() {
 		}
 		fmt.Println(string(body1))
 	}
+
+	//
+	// if len(results) == 12 {
+
+	// }
 }
