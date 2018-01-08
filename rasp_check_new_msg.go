@@ -48,14 +48,11 @@ func sendRequest() {
 	table := "NEO_8HK0EWACP8ZRUNSO5815EQ13Q.T_IOT_HTTP_PUSH"
 	formatType := "?$format=json"
 	uri := "https://iotmmsp2000064899trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/app.svc/" + table + formatType
-
-	client := &http.Client{}
-
 	req, err := http.NewRequest("GET", uri, nil)
-
 	req.Header.Add("Content-Type", `application/json`)
 	req.Header.Add("Authorization", `Basic c2Fwdm5pb3RAZ21haWwuY29tOkFiY2QwMTIzNA==`)
 
+	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		// handle error
@@ -73,8 +70,6 @@ func sendRequest() {
 		return
 	}
 
-	//fmt.Println(string(body))
-
 	var mssg Mssg
 
 	err = json.Unmarshal(body, &mssg)
@@ -86,6 +81,24 @@ func sendRequest() {
 	results := mssg.D.Results
 
 	fmt.Println(len(results))
-	// fmt.Println(results)
 	fmt.Println(results[0].C_MESSAGES)
+
+	//
+	uri = "http://node1.local/triggerWater?val=1"
+	req, err = http.NewRequest("GET", uri, nil)
+
+	// client := &http.Client{}
+	resp, err = client.Do(req)
+	if err != nil {
+		// handle error
+	}
+
+	defer resp.Body.Close()
+	body, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Body read error!", err)
+		return
+	}
+	fmt.Println(string(body))
+
 }
