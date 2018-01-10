@@ -81,6 +81,8 @@ func sendRequest() {
 	}
 
 	results := mssg.D.Results
+	//JSON RESULT
+	//{"messageType":"e94b8200fc1679da137c","sender":null,"messages":[{"water_mode":2,"interval":0,"duration":0}]}
 	fmt.Println(results[len(results)-1].C_MESSAGES)
 
 	fmt.Println(len(results))
