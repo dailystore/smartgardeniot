@@ -18,6 +18,7 @@ func main() {
 	}
 }
 
+//{"messageType":"e94b8200fc1679da137c","sender":null,"messages":[{"water_mode":2,"interval":0,"duration":0}]}
 type ResultItem struct {
 	Metadata__ struct {
 		Id   string `json:"id"`
@@ -32,6 +33,18 @@ type Mssg struct {
 	D struct {
 		Results []ResultItem `json:"results"`
 	} `json:"d"`
+}
+
+type msg struct {
+	Water_mode int `json:"water_mode"`
+	Interval   int `json:"interval"`
+	Duration   int `json:"duration"`
+}
+
+type msgCnt struct {
+	MessageType string `json:"messageType"`
+	sender      string `json:"sender"`
+	Messages    []msg  `json:"messages"`
 }
 
 var msgCount = 0
@@ -81,9 +94,8 @@ func sendRequest() {
 	}
 
 	results := mssg.D.Results
-	//JSON RESULT
-	//{"messageType":"e94b8200fc1679da137c","sender":null,"messages":[{"water_mode":2,"interval":0,"duration":0}]}
-	fmt.Println(results[len(results)-1].C_MESSAGES)
+	latestMsg := results[len(results)-1]
+	fmt.Println(latestMsg.C_MESSAGES)
 
 	fmt.Println(len(results))
 	if msgCount == 0 {
@@ -95,6 +107,11 @@ func sendRequest() {
 	if msgCount != 0 && len(results) != msgCount {
 		msgCount = len(results)
 		fmt.Println("msgCount new: ", msgCount)
+
+		res := &msgCnt{}
+		json.Unmarshal([]byte(latestMsg.C_MESSAGES), &res)
+		fmt.Println(res.Messages[0].Water_mode)
+
 		uri1 := "http://node1.local/triggerWater?val=1"
 		req1, err := http.NewRequest("GET", uri1, nil)
 
@@ -113,9 +130,4 @@ func sendRequest() {
 		}
 		fmt.Println(string(body1))
 	}
-
-	//
-	// if len(results) == 12 {
-
-	// }
 }
