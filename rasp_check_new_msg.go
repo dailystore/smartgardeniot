@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -94,13 +95,16 @@ func sendRequest() {
 	}
 
 	results := mssg.D.Results
+	if len(results) == 0 {
+		fmt.Println("Empty results returned from server!")
+		return
+	}
 	latestMsg := results[len(results)-1]
 	fmt.Println(latestMsg.C_MESSAGES)
-
+	// fmt.Println("results 0 message: ", results[0].C_MESSAGES)
 	fmt.Println(len(results))
 	if msgCount == 0 {
 		msgCount = len(results)
-		fmt.Println("msgCount: ", msgCount)
 	}
 	fmt.Println("current msgCount: ", msgCount)
 	fmt.Println("current len(results) : ", len(results))
@@ -112,13 +116,18 @@ func sendRequest() {
 		json.Unmarshal([]byte(latestMsg.C_MESSAGES), &res)
 		fmt.Println(res.Messages[0].Water_mode)
 
-		uri1 := "http://node1.local/triggerWater?val=1"
+		//0 - Interval Mode On with Duration and Interval time
+		//1 - Interval Mode Off with Duration
+		//2 - Stop, set Interval time and Duration to 0
+
+		uri1 := "http://node1.local/triggerWater?val=" + strconv.Itoa(res.Messages[0].Water_mode) + "&interval=" + strconv.Itoa(res.Messages[0].Interval) + "&duration=" + strconv.Itoa(res.Messages[0].Duration)
 		req1, err := http.NewRequest("GET", uri1, nil)
 
 		client1 := &http.Client{}
 		resp1, err := client1.Do(req1)
 		if err != nil {
 			// handle error
+			log.Fatal(err)
 		}
 		fmt.Println(uri1)
 
@@ -128,6 +137,6 @@ func sendRequest() {
 			fmt.Println("Body read error!", err)
 			return
 		}
-		fmt.Println(string(body1))
+		fmt.Println("Returned res body from NodeMCU server: ", string(body1))
 	}
 }
